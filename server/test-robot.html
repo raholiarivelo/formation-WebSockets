@@ -1,0 +1,32 @@
+<div id="log">
+</div>
+
+<script type="text/javascript">
+	//var exampleSocket = new WebSocket("ws://cloud-2pe5ophq.hosteur.net:8080");
+	//var exampleSocket = new WebSocket("wss://balio.passion-web.ovh:9972/");
+	//wss on local work only if the cert is accepted but, due to that acceptation (firefox in local my accept at it's own risk) external server wil not (when open js console and write websocket call wss here) The solution is to use ws
+	//var exampleSocket = new WebSocket("wss://127.0.0.1:8080/");
+	// var exampleSocket = new WebSocket("ws://127.0.0.1:8080/");
+	var exampleSocket = new WebSocket("ws://127.0.0.1:8100/");
+	exampleSocket.onmessage = function (event) {
+		var log = document.createElement('div')
+		log.textContent = event.data
+		document.querySelector('#log').appendChild(log)
+	}
+	exampleSocket.onopen = function (event) {
+	//   console.log('yes')
+	  exampleSocket.send(JSON.stringify([{
+	  	  	type:'configure',
+	  	  	key:'balio-front',
+	  	  	value:'v1',
+	  
+	  	  }]))
+	//   exampleSocket.send(JSON.stringify([{
+	//   	  	type:'notify',
+	//   	  	key:'app',
+	//   	  	message:'all right',
+	  
+	//   	  }]))
+	};
+	
+</script>

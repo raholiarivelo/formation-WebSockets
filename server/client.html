@@ -1,0 +1,35 @@
+<div id="log">
+</div>
+<div>
+	<button id="a">A</button>
+	<button id="b">B</button>
+</div>
+<script type="text/javascript">
+	var exampleSocket = new WebSocket("ws://127.0.0.1:8100/");
+	exampleSocket.onmessage = function (event) {
+		var log = document.createElement('div')
+		log.textContent = event.data
+		document.querySelector('#log').appendChild(log)
+	}
+	exampleSocket.onopen = function (event) {
+	  exampleSocket.send(JSON.stringify([{
+	  	  	type:'configure',
+	  	  	key:'client',
+				value:'is good',	  	  
+		}]))
+	};
+	document.querySelector('#a').addEventListener('click',function(){
+		exampleSocket.send(JSON.stringify([{
+	  	  	type:'notify',
+	  	  	key:'app',
+				message:'Hello from A',	  	  
+		}]))
+	});
+	document.querySelector('#b').addEventListener('click',function(){
+		exampleSocket.send(JSON.stringify([{
+	  	  	type:'notify',
+	  	  	key:'client',
+				message:'Hello from B',	  	  
+		}]))
+	})
+</script>
